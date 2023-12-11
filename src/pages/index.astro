@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+---
+
+<Layout title="Camilo Henriquez">
+	<main class="principal">
+	
+		<div class="left">
+			<h2>Camilo Henriquez</h2>
+			Languajes: <span id="language"></span><span class="cursor">|</span>
+			
+				<h3>Contact Me</h3>
+				<span id="contact"></span><span class="cursor">|</span>
+
+		</div>
+		
+
+		<div class="right">
+		<ul role="list" class="link-card-grid">
+			<Card
+				title="About Me"
+				body="I'm entusias person, dedicate to learn new technology for make a great solutions for companies or natural person, I make a diferent project, where try my knowledge en back_end and front_end."
+			/>
+			<Card
+				title="My Work"
+				body="Into my diferent project it's a Facturations system with Electron{JS,Firebase and Boostraps}, API for a gestion of companies and employees with NodeJs{ SQL, Express}, also created a diferent API with C#{Sagger}for my class in the university Agent, Libraly and Vacations "
+			/>
+		</ul>
+		
+		</div>
+	</main>
+</Layout>
+<script>
+const languages = ["JavaScript", "TypeScript", "Java", "Dart", "C++", "React", "NextJs", "Astro","Electron", "Flutter"];
+let current = 0;
+let currentLetter = 0;
+let deleting = false;
+
+function updateLanguage() {
+    const languageElement = document.getElementById('language');
+    let currentLanguage = languages[current];
+
+    if (deleting) {
+        // Borrar letra por letra
+        currentLetter--;
+    } else {
+        // Escribir letra por letra
+        currentLetter++;
+    }
+
+    languageElement.textContent = currentLanguage.substring(0, currentLetter);
+
+    if (!deleting && currentLetter === currentLanguage.length) {
+        // Si el texto está completo, espera un poco antes de empezar a borrar
+        setTimeout(() => { deleting = true; }, 1000);
+    } else if (deleting && currentLetter === 0) {
+        deleting = false;
+        current = (current + 1) % languages.length;
+    }
+
+    setTimeout(updateLanguage, 100); // Velocidad de borrado y escritura
+}
+
+const contact = ["Phone: +504 97840276","Mail: henriquezhector1@homtail.com", "Linkedin: @hnkatze", "Github: @hnkatze"];
+let contactcurrent = 0;
+let contactcurrentLetter = 0;
+let contactdeleting = false;
+
+function updateContact() {
+    const contactElement = document.getElementById('contact');
+    let currentContact = contact[contactcurrent];
+
+    if (contactdeleting) {
+        // Borrar letra por letra
+        contactcurrentLetter--;
+    } else {
+        // Escribir letra por letra
+        contactcurrentLetter++;
+    }
+
+    contactElement.textContent = currentContact.substring(0, contactcurrentLetter);
+
+    if (!contactdeleting && contactcurrentLetter === currentContact.length) {
+        // Si el texto está completo, espera un poco antes de empezar a borrar
+        setTimeout(() => { contactdeleting = true; }, 1000);
+    } else if (contactdeleting && contactcurrentLetter === 0) {
+        contactdeleting = false;
+        contactcurrent = (contactcurrent + 1) % contact.length;
+    }
+
+    setTimeout(updateContact, 100); // Velocidad de borrado y escritura
+}
+
+updateContact();
+updateLanguage();
+</script>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+	main {
+		
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+		display: flex;
+		flex-direction: row;
+	}
+.cursor {
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+    50% { opacity: 0; }
+}
+#language {
+    font-weight: bold;
+    color: #007bff;
+}
+.left{
+	width: 50%;
+	font-family: 'Ubuntu',sans-serif;
+}
+.right{
+	width: 50%;
+}
+
+
+</style>
